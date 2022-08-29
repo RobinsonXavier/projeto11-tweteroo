@@ -13,32 +13,26 @@ app.get('/tweets', (req, res) => {
     const lastTweets = [];
 
     if (tweets.length >= 10) {
-        for ( let i = tweets.length - 1; i > i - 10; i--) {
 
-            const pic = '';
-    
-            users.find( user => {
-                if(user.username === tweets[i].username) {
-                    pic = user.avatar;
-                }
-            })
-    
+        for ( let i = tweets.length - 10; i < tweets.length; i++) {
+
+            const avatar = users.find( user => user.username === tweets[i].username);
     
             lastTweets.push({
                 username: tweets[i].username,
-                avatar: pic,
+                avatar: avatar.avatar,
                 tweet: tweets[i].tweet,
             })
         }
     } else {
 
-        for ( let i = tweets.length - 1; i !== 0; i--) {
+        for ( let i = 0; i < tweets.length; i++) {
 
-            const pic = users.find( user => user === tweets[i].username);
+            const avatar = users.find( user => user.username === tweets[i].username);
     
             lastTweets.push({
                 username: tweets[i].username,
-                avatar: pic,
+                avatar: avatar.avatar,
                 tweet: tweets[i].tweet,
             })
         }
