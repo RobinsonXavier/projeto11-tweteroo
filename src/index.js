@@ -47,7 +47,7 @@ app.post('/sign-up', (req, res) => {
     const {username, avatar} = req.body;
 
     if (!username || !avatar) {
-        return res.status(422).send('You must fill in all of the fields');
+        return res.status(422).send('Todos os campos são obrigatórios!');
     }
 
     users.push({
@@ -61,8 +61,8 @@ app.post('/sign-up', (req, res) => {
 app.post('/tweets', (req, res) => {
     const {username, tweet} = req.body;
 
-    if(!tweet) {
-        return res.status(422).send('You must fill this field');
+    if(!tweet || !username) {
+        return res.status(422).send('Todos os campos são obrigatórios!');
     }
 
     tweets.push({
