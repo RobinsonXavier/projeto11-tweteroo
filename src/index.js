@@ -6,6 +6,49 @@ const app = express();
 const users = [];
 const tweets = [];
 
+app.use(cors());
+app.use(express.json());
+
+app.get('/tweets', (req, res) => {
+    const lastTweets = [];
+
+    if (tweets.length >= 10) {
+        for ( let i = tweets.length - 1; i > i - 10; i--) {
+
+            const pic = '';
+    
+            users.find( user => {
+                if(user.username === tweets[i].username) {
+                    pic = user.avatar;
+                }
+            })
+    
+    
+            lastTweets.push({
+                username: tweets[i].username,
+                avatar: pic,
+                tweet: tweets[i].tweet,
+            })
+        }
+    } else {
+
+        for ( let i = tweets.length - 1; i !== 0; i--) {
+
+            const pic = users.find( user => user === tweets[i].username);
+    
+            lastTweets.push({
+                username: tweets[i].username,
+                avatar: pic,
+                tweet: tweets[i].tweet,
+            })
+        }
+    }
+
+    
+
+    res.send(lastTweets);
+});
+
 app.post('/sign-up', (req, res) => {
     const {username, avatar} = req.body;
 
@@ -14,8 +57,8 @@ app.post('/sign-up', (req, res) => {
     }
 
     users.push({
-        username,
-        avatar
+        username: username,
+        avatar: avatar
     });
 
     res.send('OK');
